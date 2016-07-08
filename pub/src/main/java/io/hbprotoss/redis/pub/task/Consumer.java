@@ -42,11 +42,7 @@ public class Consumer implements Runnable {
         while (true) {
             Object object;
             try {
-                object = queue.pollFirst(RETRY_INTERNAL, TimeUnit.MILLISECONDS);
-                if (object == null) {
-                    logger.debug("pollFirst timeout, retrying...");
-                    continue;
-                }
+                object = queue.take();
             } catch (InterruptedException e) {
                 logger.error("interrupted while waiting to queue.take()");
                 sleep(RETRY_INTERNAL);
